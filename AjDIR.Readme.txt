@@ -1,0 +1,434 @@
+# (c) 2013-2026 David Groeling / Ajumbledbox. All rights reserved.
+# Project: Ajumbledbox Data Integrity Retention (AjDIR)
+# Ownership: AjDIR and the project files created for this project are owned by
+# Ajumbledbox / David Groeling unless otherwise stated in a specific file.
+# Liability: AjDIR project files, plans, instructions, and future outputs
+# are provided "AS IS" without warranty of any kind unless a later project document
+# states otherwise.
+# Third-party tooling: Third-party tooling, libraries, frameworks, and their outputs
+# retain their own ownership, copyright, and licensing. AjDIR does not claim
+# ownership over third-party tooling.
+
+
+==============================================================================
+AjDIR README
+==============================================================================
+
+This file is the complete explanation of AjDIR. Some of what is written here
+is also explained in the book, in the dashboard information buttons and in
+other places. It is repeated here on purpose so that this one file gives a
+full understanding by itself.
+
+
+------------------------------------------------------------------------------
+1. WHAT AjDIR IS
+------------------------------------------------------------------------------
+
+AjDIR (Ajumbledbox Data Integrity Retention) is a method for retaining,
+organizing, checking the integrity of, and retrieving your own personal
+information.
+
+Integrity is the core of AjDIR. Everything you store in the AjDIR warehouse
+is recorded, and every stored file is hashed (SHA-256) so that it can later be
+checked to show it has not changed.
+
+The book "Personal Information Control" is one method of approach to keeping
+ownership of your information. AjDIR is the culmination of that approach. You
+may define your own method, or use AjDIR as it is supplied.
+
+The parts of AjDIR fit together like this:
+
+- VeraCrypt provides the outer encrypted container. AjDIR is meant to be kept
+  inside a VeraCrypt container.
+- The AjDIR warehouse (the "core" folder) holds your content in ordinary,
+  human-readable folders and files, with two audit files that record what is
+  there.
+- The entry form adds content to the warehouse. The viewer shows what the
+  warehouse holds without changing anything.
+- SDelete and the practices in the book deal with exposed original files and
+  remnants left outside the protected container.
+- The supplied tools (AjFI, AjFI.2, AjUST, Notepad++, SumatraPDF) support
+  checking, reading and understanding your files and storage.
+
+
+------------------------------------------------------------------------------
+2. STARTING AjDIR
+------------------------------------------------------------------------------
+
+1. Mount the VeraCrypt container that holds AjDIR.
+2. Open the AjDIR folder inside the mounted container.
+3. Run AjDIR.Dashboard.exe.
+
+On the first launch, AjDIR displays the complete liability statement. You must
+select Accept before the dashboard opens. Selecting Decline closes AjDIR. After
+acceptance, AjDIR creates `AjDIR.lic` in the AjDIR root. That file records the
+local acceptance date and time and the Windows computer name.
+
+The dashboard is the starting point. It opens each part of AjDIR. It does not
+read or write the warehouse itself.
+
+AjDIR does not install anything. It runs from its own folder and uses its own
+private copy of Python (in the "runtime" folder). Python does not need to be
+installed on the computer.
+
+
+------------------------------------------------------------------------------
+3. THE DASHBOARD - WHAT EVERY BUTTON DOES AND THE RESULT
+------------------------------------------------------------------------------
+
+The dashboard has three sections: Warehouse, Supplied Tools and Information.
+
+The top-level Documents menu opens the Readme, Liability, Ownership, Usage
+Instructions and User Guide with the portable Notepad++ supplied with AjDIR.
+
+If the program or file opened by the AjFI, AjUST, Notepad++, SumatraPDF,
+SDelete Files or Readme button is missing, the dashboard shows an error
+message instead of opening it.
+
+WAREHOUSE
+---------
+
+Add Content
+  Action: Opens the AjDIR entry form.
+  Result: You can create categories and add content to the warehouse. See
+  section 4. Only one entry form can be open at a time.
+
+View Content
+  Action: Opens the AjDIR read-only viewer.
+  Result: You can see everything in the warehouse. Nothing is changed. See
+  section 5.
+
+SUPPLIED TOOLS
+--------------
+
+AjFI
+  Action: Opens the AjFI application from components\AjFI.
+  Result: AjFI is the full-featured file-integrity application.
+
+AjFI.2 File Compare
+  Action: Opens a file selector for the first file, then a file selector for
+  the second file. It then opens a window that compares the two files.
+  Result: The two files are compared by their SHA-256 hash values and the
+  result is shown as MATCH or MISMATCH. See section 7.
+
+AjFI.2.File Information
+  Action: Shows a message explaining AjFI.2 File Compare.
+  Result: Information only. Nothing is run.
+
+AjUST
+  Action: Opens the AjUST application from components\AjUST.
+  Result: AjUST helps you understand a storage drive's speed and interface
+  behavior, for example when moving files appears slow.
+
+Notepad++
+  Action: Opens the portable Notepad++ from components\notepad.plus.plus.
+  Result: A local text reader and editor that does not need to be installed
+  on the computer.
+
+SumatraPDF
+  Action: Opens the book "Personal Information Control" in the portable
+  SumatraPDF from components\SumatraPDF.portable.
+  Result: You can read the book without needing a PDF application installed
+  on the computer. See section 9.
+
+SDelete Information
+  Action: Shows a message explaining SDelete, with the Sysinternals SDelete
+  web address.
+  Result: Information only. Nothing is deleted.
+
+SDelete Files
+  Action: Opens a file selector, then a warning window, then permanently
+  deletes the files you chose, if you choose Continue.
+  Result: The selected files are permanently deleted and cannot be
+  recovered. See section 8 before using this button.
+
+INFORMATION
+-----------
+
+VeraCrypt Information
+  Action: Shows a message stating that a copy of VeraCrypt is included and
+  where it is (components\VeraCrypt).
+  Result: Information only. Nothing is run. See section 10.
+
+Readme
+  Action: Opens this file in a read-only window.
+  Result: Information only.
+
+
+------------------------------------------------------------------------------
+4. THE ENTRY FORM (ADD CONTENT)
+------------------------------------------------------------------------------
+
+The entry form is the only part of AjDIR that writes to the warehouse.
+
+Only one entry form can run at a time. If one is already open and you try to
+open another, a message says the entry form is already open. When you close
+that message, only the new attempt closes. The form that was already open is
+not affected.
+
+What you can do in the entry form:
+
+Create Category
+  Creates a category (a folder) in the warehouse. By default it is created at
+  the top level. Tick "Nest beneath an existing category" and choose a parent
+  to create it inside another category. Clicking a category in the tree fills
+  in that category as the parent.
+
+Select and Add Asset
+  Choose a file to add to the selected category. AjDIR copies the file into
+  the warehouse. The file keeps its existing filename. Your original file is
+  NOT moved or deleted; it stays where it was.
+
+Create Typed Text Asset
+  Type a name and the text. AjDIR stores the text as a plain-text file named
+  with that name plus ".txt".
+
+Refresh
+  Reloads the warehouse display.
+
+Open Invalid Directory
+  Opens the "invalid" folder (see section 6).
+
+Manage Invalid Items
+  Lets you permanently delete one selected item, or all items, in the
+  "invalid" folder with SDelete, using one overwrite pass. Every deletion
+  asks you to confirm first.
+
+What AjDIR checks when you add an asset:
+
+- The complete path of every new folder and file must not be longer than
+  259 characters.
+- A category or file with the same name cannot already exist in the same
+  place.
+- If exactly the same content is already stored anywhere in the warehouse,
+  the asset is refused and the existing asset is identified.
+- The stored copy is hashed (SHA-256) and must match the hash of the
+  original. If it does not match, the asset is not accepted.
+
+
+------------------------------------------------------------------------------
+5. THE VIEWER (VIEW CONTENT)
+------------------------------------------------------------------------------
+
+The viewer is strictly read-only. It reads the warehouse audit files and
+shows:
+
+- Complete Inventory: everything in the warehouse.
+- Directories: the categories and folders.
+- Assets: the stored files.
+
+You can search, limit the view to a part of the warehouse by selecting it in
+the tree, and see the integrity status of what is stored. "Selected record
+details" shows the full details of the selected item.
+
+The viewer changes nothing and creates no files. "Close and Clear" clears the
+displayed data and closes the viewer.
+
+The viewer can be open at the same time as the entry form.
+
+
+------------------------------------------------------------------------------
+6. THE WAREHOUSE, ITS RECORDS AND ITS INTEGRITY PROTECTION
+------------------------------------------------------------------------------
+
+The warehouse is the "core" folder. Your content is kept there in ordinary
+folders and files that you can read without AjDIR.
+
+Two audit files in "core" record everything:
+
+- registry.xmlf records every folder: its ID, its lineage (its place in the
+  hierarchy) and its path.
+- assets.xmlf records every stored file: its ID, filename, the lineage of the
+  folder that holds it, its path, its SHA-256 hash, the date it was added and
+  the date it was moved or removed.
+
+Every folder and stored file has a permanent six-character, case-sensitive
+ID. These records are only ever added to. Earlier entries are not changed.
+
+How AjDIR protects the warehouse while adding an asset:
+
+1. Before the asset is added, both audit files are copied and each copy is
+   checked by SHA-256 to be identical to its original.
+2. Exactly one asset is processed, and its stored copy is hash-checked.
+3. Afterward, the audit files are compared with the copies taken before.
+   Only the exact expected new entries are allowed.
+4. A completed asset record ends with a final "complete" marker.
+5. Verified good copies of the audit files are kept for recovery.
+
+If something went wrong (for example the computer lost power while adding an
+asset), the next time the entry form opens AjDIR:
+
+- returns the warehouse to the verified state from before the failed
+  attempt, keeping all of your established content;
+- removes only the incomplete attempted addition;
+- moves any content in the warehouse that is not recorded in the audit files
+  to the "invalid" folder, outside the warehouse;
+- tells you what was found and where it came from.
+
+The failed asset is not completed automatically. You decide whether to add it
+again.
+
+The "invalid" folder holds content that is not part of the accepted
+warehouse. You can inspect it with "Open Invalid Directory", and you can
+permanently delete it with "Manage Invalid Items" in the entry form.
+
+
+------------------------------------------------------------------------------
+7. AjFI.2 FILE COMPARE - FULL EXPLANATION
+------------------------------------------------------------------------------
+
+When you press the AjFI.2 File Compare button, or use the AjFI.2 tool
+directly, you are comparing two files by comparing their SHA-256 hash values.
+
+This is a form of determining the validity of a file, in an attempt to
+determine whether the two files are identical. In some understandings it is
+used to show that there is no file corruption.
+
+What you are presented with when you press the button:
+
+1. Select the first file.
+2. Select the second file.
+
+A window then opens and shows:
+
+- the two files being compared;
+- progress for each file;
+- the SHA-256 hash of each file;
+- the time taken;
+- the result: MATCH (the files are identical) or MISMATCH (the files
+  differ).
+
+Press Enter to close that window.
+
+This is only a comparison tool for files that are supposed to be the same.
+The result should be a match. A mismatch means the contents of the two files
+are different.
+
+Each comparison also writes a log file named hash_log_YYYYMMDD_HHMMSS.txt in
+the components\AjFI.2.file folder. The log records the date and time, the
+result, both file paths, their sizes and their hashes.
+
+Large files take longer. Very large files and containers can take a long
+time, even hours, depending on the drives and connections involved. The tool
+cannot be paused; if it is stopped, the comparison must be started again.
+
+------------------------------------------------------------------------------
+8. SDELETE - FULL EXPLANATION AND WARNING
+------------------------------------------------------------------------------
+
+SDelete is a Microsoft Sysinternals tool. It permanently deletes files by
+overwriting their contents so that they cannot be recovered.
+
+Sysinternals SDelete web page:
+https://learn.microsoft.com/en-us/sysinternals/downloads/sdelete
+
+You are strongly urged to read the Sysinternals SDelete page before using
+SDelete. The AjDIR book contains a brief explanation of basic SDelete usage.
+
+!!! WARNING !!!
+
+Deleting the wrong files can corrupt your system. SDelete in AjDIR is
+intended ONLY for your own personal content. It is NOT for system files or
+program files. Choosing which files to delete is your responsibility.
+
+What the SDelete Files button does, step by step:
+
+1. A file selector opens. Only files can be selected, not folders. You may
+   select more than one file.
+2. A warning window lists every file you selected. It warns that the files
+   will be permanently deleted with SDelete, that they cannot be recovered,
+   and that you must use extreme care.
+3. You must choose Continue or Cancel. Cancel is the selected choice when
+   the window opens, and pressing Esc also cancels.
+4. If you choose Continue, each file is deleted with SDelete using one
+   overwrite pass.
+5. A message tells you how many files were permanently deleted. If any file
+   could not be deleted, it is listed.
+
+The ultimate result: the files you selected are permanently gone. They
+cannot be recovered by AjDIR or by any other means intended for recovering
+deleted files.
+
+AjDIR does not offer a choice of the number of overwrite passes. Using
+SDelete with other settings is up to you, using SDelete directly from
+components\SDelete.
+
+Why SDelete is supplied: when you add a file to the AjDIR warehouse, your
+original file stays where it was. If that original is outside the protected
+container, it is still exposed. The book explains securely deleting such
+originals and their remnants on both HDD (platter) and SSD/NVMe (flash)
+drives.
+
+The entry form also uses SDelete, with one overwrite pass, for "Manage
+Invalid Items" (see sections 4 and 6).
+
+------------------------------------------------------------------------------
+9. THE BOOK - "PERSONAL INFORMATION CONTROL"
+------------------------------------------------------------------------------
+
+The book is components\book\Personal_Information_Control_Final_Book.pdf.
+
+It explains keeping ownership of your credentials, data and recovery on your
+own terms, including generating your own passwords, keeping them and your
+sensitive files in a VeraCrypt encrypted container, and securely deleting
+files and their remnants on HDD and SSD/NVMe drives.
+
+The SumatraPDF button opens the book directly, so you do not have to look for
+it. You may also open the book file with any PDF application you choose.
+
+
+------------------------------------------------------------------------------
+10. VERACRYPT
+------------------------------------------------------------------------------
+
+A copy of VeraCrypt is included with AjDIR, in components\VeraCrypt.
+
+VeraCrypt is what provides the encrypted container that AjDIR is kept in. By
+the time you are using the dashboard, the container is already mounted, so
+the included copy is not needed to open AjDIR. It is available if you want
+an additional VeraCrypt instance, for whatever reason you have.
+
+VeraCrypt has its own license, in components\VeraCrypt.
+
+
+------------------------------------------------------------------------------
+11. WHY THE SUPPLIED TOOLS ARE PORTABLE
+------------------------------------------------------------------------------
+
+The supplied tools are portable: they run from the AjDIR folder and do not
+need to be installed on the computer. This reduces dependence on programs
+installed system-wide and is intended to minimize system-wide remnants.
+
+Portable use does NOT guarantee that the operating system keeps no trace at
+all. Windows itself may still record that programs or files were used.
+
+The supplied tools are optional. You may use your own programs instead if you
+choose.
+
+
+------------------------------------------------------------------------------
+12. WHAT IS IN THE AjDIR FOLDER
+------------------------------------------------------------------------------
+
+AjDIR.Dashboard.exe      The dashboard (starting point).
+AjDIR.Readme.txt         This file.
+AjDIR.lic                Created after first-run liability acceptance.
+application\             Internal AjDIR processing files.
+runtime\                 AjDIR's private Python runtime.
+components\              The supplied tools and the book.
+docs\                    Liability, ownership, usage and user-guide documents.
+core\                    The warehouse, created and initialized on first use.
+invalid\                 Created when unregistered content must be isolated.
+
+
+------------------------------------------------------------------------------
+13. OWNERSHIP, LIABILITY AND THIRD-PARTY TOOLS
+------------------------------------------------------------------------------
+
+AjDIR and its project files are owned by Ajumbledbox / David Groeling unless
+a specific file states otherwise. AjDIR is provided "AS IS" without warranty
+of any kind.
+
+The supplied third-party tools - VeraCrypt, SDelete (Microsoft
+Sysinternals), Notepad++, SumatraPDF and Python - keep their own ownership,
+copyright and licensing. AjDIR does not claim ownership of them.
